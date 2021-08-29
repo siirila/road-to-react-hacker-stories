@@ -1,6 +1,46 @@
 import * as React from 'react';
 
-const list = [
+function List(props) {
+  return (
+    <ul>
+      {props.list.map(function(item) {
+        return (<Item item={item} />);
+      })}
+    </ul>
+  );
+}
+
+const Item = (props) => {
+  const item = props.item;
+
+  return (
+    <li key={item.objectID}>
+    <span>
+      <a href={item.url}>{item.title}</a>
+    </span>
+    <span>{item.author}</span>
+    <span>{item.num_comments}</span>
+    <span>{item.points}</span>
+  </li>
+  );
+}
+
+function Search() {
+  const handleChange = (event) => {
+    console.log(event);
+  }
+
+  return (
+    <div>
+      <label htmlFor="sarch">Search: </label>
+      <input id="search" type="text" onChange={handleChange} />
+    </div>
+  );
+}
+
+function App() {
+  
+const stories = [
   {
     title: 'React',
     url: 'https://reactjs.org/',
@@ -19,45 +59,12 @@ const list = [
   },
 ];
 
-function List() {
-  return (
-    <ul>
-      {list.map(function(item) {
-        return (
-            <li key={item.objectID}>
-              <span>
-                <a href={item.url}>{item.title}</a>
-              </span>
-              <span>{item.author}</span>
-              <span>{item.num_comments}</span>
-              <span>{item.points}</span>
-            </li>
-          );
-      })}
-    </ul>
-  );
-}
-
-function Search() {
-  const handleChange = (event) => {
-    console.log(event);
-  }
-
-  return (
-    <div>
-      <label htmlFor="sarch">Search: </label>
-      <input id="search" type="text" onChange={handleChange} />
-    </div>
-  );
-}
-
-function App() {
   return (
     <div>
       <h1>My Hacker Stories</h1>
       <Search />
       <hr />
-      <List />
+      <List list={stories} />
     </div>
   );
 }
